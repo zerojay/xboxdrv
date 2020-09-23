@@ -187,8 +187,8 @@ bool XboxOneWiredController::parse_auth_status(uint8_t* data, int len, XboxGener
 {
   if(!sent_auth && data[1] == 0x20)
   {
-    uint8_t authbuf[2] = { 0x05, 0x20 };
-    usb_write(endpoint, authbuf, 2);
+    uint8_t authbuf[5] = { 0x05, 0x20, 0x00, 0x01, 0x00 };
+    usb_write(endpoint, authbuf, 5);
     sent_auth = true;
   }
 

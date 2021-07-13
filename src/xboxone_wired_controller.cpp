@@ -47,7 +47,27 @@ XboxOneWiredController::XboxOneWiredController(libusb_device* usb, int controlle
   guide_button(false)
 {
   usb_claim_interface(interface, try_detach);
-  usb_submit_read(endpoint, 32);
+  try
+  {
+    usb_submit_read(endpoint, 32);
+  }
+  catch(std::runtime_error)
+  {
+    // Zeroplus makes clone XBox controllers and use a different
+    // endpoint. I don't know which endpoint the second connected
+    // controller uses, because I only have one:
+    log_debug("Enable Fallback for Zeroplus");
+    endpoint = 2;
+
+    // It also requires this initialization
+    uint8_t authbuf[4] = { 0x04, 0x20, 0x01, 0x00 };
+    uint8_t authbuf2[13] = { 0x01, 0x20, 0x01, 0x09, 0x00, 0x1e, 0x20, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00 };
+    usb_write(endpoint, authbuf, 4);
+    usb_write(endpoint, authbuf2, 13);
+
+    // And 32 bytes are not enough for this one:
+    usb_submit_read(endpoint, 64);
+  }
 }
 
 XboxOneWiredController::~XboxOneWiredController()

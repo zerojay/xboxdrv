@@ -147,6 +147,7 @@ XPadDevice xpad_devices[] = {
   { GAMEPAD_XBOXONE,          0x045e, 0x02e6, "XboxOne Controller (Lunar White)" },
   { GAMEPAD_XBOXONE,          0x24c6, 0x543a, "AmazonBasics XboxOne Controller" },
   { GAMEPAD_XBOXONE,          0x0e6f, 0x0139, "Afterglow Wired Controller for Xbox One" },
+  { GAMEPAD_XBOXONE,          0x045e, 0x02ea, "Microsoft Xbox One S Controller" }, // Added for Zeroplus clone XBox controller. In lsusb, it just reports as 045e:02ea Microsoft Corp. The name Zeroplus isn't actually seen on the device.
 
   { GAMEPAD_PLAYSTATION3_USB, 0x054c, 0x0268, "PLAYSTATION(R)3 Controller" }
 };
